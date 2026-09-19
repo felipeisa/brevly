@@ -1,11 +1,15 @@
 import { fastifyCors } from '@fastify/cors'
+import fastifyMultipart from '@fastify/multipart'
+import fastifySwagger from '@fastify/swagger'
+import scalarUI from '@scalar/fastify-api-reference'
 import { fastify } from 'fastify'
 import {
   hasZodFastifySchemaValidationErrors,
+  jsonSchemaTransform,
   serializerCompiler,
   validatorCompiler,
 } from 'fastify-type-provider-zod'
-import { createLinkRoute } from './routes/create-link'
+import { createLinkRoute } from './routes/create-links-route'
 
 const server = fastify()
 
@@ -23,8 +27,6 @@ server.setErrorHandler((error, request, reply) => {
     })
   }
 
-  // Envia o erro p/ alguma ferramenta de observabilidade (Sentry/Datadog/Grafana/Otel)
-
   console.error(error)
 
   return reply.status(500).send({ message: 'Erro do servidor interno' })
@@ -32,7 +34,28 @@ server.setErrorHandler((error, request, reply) => {
 
 server.register(fastifyCors, { origin: '*' })
 
+server.register(fastifyMultipart)
+server.register(fastifySwagger, {
+  openapi: {
+    info: {
+      title: 'brevly server',
+      version: '1.0.0',
+    },
+  },
+  transform: jsonSchemaTransform,
+})
+
+// Rotas
 server.register(createLinkRoute)
+
+server.get('/openapi.json', () => server.swagger())
+
+server.register(scalarUI, {
+  routePrefix: '/docs',
+  configuration: {
+    layout: 'modern',
+  },
+})
 
 server.listen({ port: 3333, host: '0.0.0.0' }).then(() => {
   console.log('HTTP Server Executando')
