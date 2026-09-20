@@ -1,22 +1,22 @@
 import type { FastifyPluginAsyncZod } from 'fastify-type-provider-zod'
 import z from 'zod'
 import { createLink } from '@/app/functions/create-links'
+import { isRight, unwrapEither } from '@/shared/either'
 
 export const createLinkRoute: FastifyPluginAsyncZod = async server => {
   server.post(
     '/link',
     {
       schema: {
-        summary: 'Create a new link',
+        summary: 'Criar um novo link',
         body: z.object({
           originalUrl: z.string().url(),
           shortUrl: z.string(),
         }),
         response: {
-          201: z.object({ linkId: z.string() }),
-          409: z
-            .object({ message: z.string() })
-            .describe('Link already exists'),
+          201: z.object({ id: z.string() }),
+          400: z.object({ message: z.string() }),
+          409: z.object({ message: z.string() }).describe('O link ja existe'),
         },
       },
     },
@@ -28,7 +28,20 @@ export const createLinkRoute: FastifyPluginAsyncZod = async server => {
         shortUrl,
       })
 
-      return reply.status(201).send({ linkId: 'teste' })
+      if (isRight(result)) {
+        console.log(unwrapEither(result))
+        const { id } = unwrapEither(result)
+        return reply.status(201).send({
+          id: id,
+        })
+      }
+
+      const error = unwrapEither(result)
+
+      switch (error.constructor.name) {
+        case 'InvalidShortUrl':
+          return reply.status(400).send({ message: error.message })
+      }
     }
   )
 }
