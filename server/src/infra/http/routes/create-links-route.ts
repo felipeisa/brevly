@@ -41,6 +41,8 @@ export const createLinkRoute: FastifyPluginAsyncZod = async server => {
       switch (error.constructor.name) {
         case 'InvalidShortUrl':
           return reply.status(400).send({ message: error.message })
+        case 'ShortUrlAlreadyExists':
+          return reply.status(409).send({ message: error.message })
       }
     }
   )
