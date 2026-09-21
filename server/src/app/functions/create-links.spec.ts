@@ -41,17 +41,16 @@ describe('create link', () => {
   })
 
   it('nao deve ser possível inserir url curta duplicada', async () => {
-    const [shortUrlExists] = await db
-      .select({ shortUrl: schema.links.shortUrl })
-      .from(schema.links)
-      .limit(1)
-      .toString()
+    const shortUrl = `${randomUUID()}`
 
-    console.log(shortUrlExists)
+    await createLink({
+      originalUrl: 'google.com.br',
+      shortUrl: `${shortUrl}`,
+    })
 
     const sut = await createLink({
       originalUrl: 'google.com.br',
-      shortUrl: shortUrlExists,
+      shortUrl: shortUrl,
     })
 
     expect(isLeft(sut)).toBe(true)
