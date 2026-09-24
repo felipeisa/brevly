@@ -9,6 +9,7 @@ export const createLinkRoute: FastifyPluginAsyncZod = async server => {
     {
       schema: {
         summary: 'Criar um novo link',
+        tags: ['links'],
         body: z.object({
           originalUrl: z.string().url(),
           shortUrl: z.string(),
