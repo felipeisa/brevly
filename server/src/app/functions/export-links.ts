@@ -89,9 +89,10 @@ export async function exportLinks(
 
   // const [{ url }] = await Promise.all({
   //   uploadToStorage
-  //   convertToCSVPipeline,
-
+  //   convertToCSVPipeline
   // })
+
+  await convertToCSVPipeline
 
   // console.log(url)
 
