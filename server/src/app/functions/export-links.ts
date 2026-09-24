@@ -46,7 +46,7 @@ export async function exportLinks(
   // }
 
   const csv = stringify({
-    delimiter: '.',
+    delimiter: ',',
     header: true,
     columns: [
       { key: 'id', header: 'id' },
@@ -71,6 +71,12 @@ export async function exportLinks(
       },
     }),
     csv,
+    new Transform({
+      transform(chunk: Buffer, encoding, callback) {
+        console.log(chunk.toString())
+        callback()
+      },
+    }),
     uploadToStorageStream
   )
 

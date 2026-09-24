@@ -1,6 +1,5 @@
 import { faker } from '@faker-js/faker'
-import { describe, expect, it } from 'vitest'
-import { isRight, unwrapEither } from '@/shared/either'
+import { describe, it } from 'vitest'
 import { makeLink } from '@/test/factories/make-links'
 import { exportLinks } from './export-links'
 

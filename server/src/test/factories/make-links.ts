@@ -6,13 +6,14 @@ import { schema } from '@/infra/db/schemas'
 export async function makeLink(
   overrides?: Partial<InferInsertModel<typeof schema.links>>
 ) {
+  const word = faker.internet.domainWord()
   const number = faker.number.int({ min: 1000, max: 9999 })
 
   const result = await db
     .insert(schema.links)
     .values({
       originalUrl: faker.internet.url(),
-      shortUrl: `google-${number}`,
+      shortUrl: `${word}-${number}`,
       ...overrides,
     })
     .returning()
