@@ -1,7 +1,7 @@
 import { PassThrough, Transform } from 'node:stream'
 import { pipeline } from 'node:stream/promises'
 import { stringify } from 'csv-stringify'
-import { ConsoleLogWriter, ilike } from 'drizzle-orm'
+import { ilike } from 'drizzle-orm'
 import z from 'zod'
 import { db, pg } from '@/infra/db'
 import { schema } from '@/infra/db/schemas'
@@ -71,30 +71,27 @@ export async function exportLinks(
       },
     }),
     csv,
-    new Transform({
-      transform(chunk: Buffer, encoding, callback) {
-        console.log(chunk.toString())
-        callback()
-      },
-    }),
+    // new Transform({
+    //   transform(chunk: Buffer, encoding, callback) {
+    //     console.log(chunk.toString())
+    //     callback()
+    //   },
+    // }),
     uploadToStorageStream
   )
 
-  // const uploadToStorage = uploadFileToStorage({
-  //   contentType: 'text/csv',
-  //   folder: 'downloads',
-  //   fileName: `${new Date().toISOString()}-links.csv`,
-  //   contentStream: uploadToStorageStream,
-  // })
+  const uploadToStorage = uploadFileToStorage({
+    contentType: 'text/csv',
+    folder: 'downloads',
+    fileName: `${new Date().toISOString()}-links.csv`,
+    contentStream: uploadToStorageStream,
+  })
 
-  // const [{ url }] = await Promise.all({
-  //   uploadToStorage
-  //   convertToCSVPipeline
-  // })
+  const [{ url }] = await Promise.all([uploadToStorage, convertToCSVPipeline])
 
-  await convertToCSVPipeline
+  // await convertToCSVPipeline
 
   // console.log(url)
 
-  return makeRight({ reportUrl: '' })
+  return makeRight({ reportUrl: url })
 }

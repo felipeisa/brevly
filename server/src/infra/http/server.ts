@@ -10,6 +10,7 @@ import {
   validatorCompiler,
 } from 'fastify-type-provider-zod'
 import { createLinkRoute } from './routes/create-link-route'
+import { exportLinksRoute } from './routes/export-links'
 import { getLinksRoute } from './routes/get-links'
 
 const server = fastify()
@@ -49,6 +50,7 @@ server.register(fastifySwagger, {
 // Rotas
 server.register(createLinkRoute)
 server.register(getLinksRoute)
+server.register(exportLinksRoute)
 
 server.get('/openapi.json', () => server.swagger())
 
