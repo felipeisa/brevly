@@ -28,8 +28,6 @@ export const accessLinkRoute: FastifyPluginAsyncZod = async server => {
         shortUrl: shortUrl,
       })
 
-      console.log(result)
-
       if (isLeft(result)) {
         const error = unwrapEither(result)
         return reply.status(404).send({ message: error.message })

@@ -1,5 +1,4 @@
 import { fastifyCors } from '@fastify/cors'
-import fastifyMultipart from '@fastify/multipart'
 import fastifySwagger from '@fastify/swagger'
 import scalarUI from '@scalar/fastify-api-reference'
 import { fastify } from 'fastify'
@@ -9,6 +8,7 @@ import {
   serializerCompiler,
   validatorCompiler,
 } from 'fastify-type-provider-zod'
+import { env } from '@/env'
 import { accessLinkRoute } from './routes/access-link-route'
 import { createLinkRoute } from './routes/create-link-route'
 import { deleteLinkRoute } from './routes/delete-link-route'
@@ -38,7 +38,6 @@ server.setErrorHandler((error, request, reply) => {
 
 server.register(fastifyCors, { origin: '*' })
 
-server.register(fastifyMultipart)
 server.register(fastifySwagger, {
   openapi: {
     info: {
@@ -65,6 +64,6 @@ server.register(scalarUI, {
   },
 })
 
-server.listen({ port: 3333, host: '0.0.0.0' }).then(() => {
+server.listen({ port: env.PORT, host: '0.0.0.0' }).then(() => {
   console.log('HTTP Server Executando')
 })

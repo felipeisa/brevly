@@ -1,26 +1,12 @@
 import { randomUUID } from 'node:crypto'
 import { faker } from '@faker-js/faker'
-import { beforeAll, describe, expect, it, vi } from 'vitest'
-import { string } from 'zod'
+import { describe, expect, it, vi } from 'vitest'
 import * as upload from '@/infra/storage/upload-file-to-storage'
 import { isRight, unwrapEither } from '@/shared/either'
 import { makeLink } from '@/test/factories/make-links'
 import { exportLinks } from './export-links'
 
 describe('export links', () => {
-  // // Moka
-  // beforeAll(() => {
-  //   vi.mock('@/infra/storage/upload-file-to-storage.ts', () => {
-  //     return {
-  //       uploadFileToStorage: vi.fn().mockImplementation(() => {
-  //         return {
-  //           key: `${randomUUID()}.csv`,
-  //           url: 'https://storage.com/file.csv'
-  //         }
-  //       })
-  //     }
-  //   })
-  // })
   it('deve ser possível exportar os links', async () => {
     const uploadStub = vi
       .spyOn(upload, 'uploadFileToStorage')

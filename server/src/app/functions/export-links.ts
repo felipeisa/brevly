@@ -41,10 +41,6 @@ export async function exportLinks(
 
   const cursor = pg.unsafe(sql, params as string[]).cursor(2)
 
-  // for await (const rows of cursor) {
-  //   console.log(rows)
-  // }
-
   const csv = stringify({
     delimiter: ',',
     header: true,
@@ -71,12 +67,6 @@ export async function exportLinks(
       },
     }),
     csv,
-    // new Transform({
-    //   transform(chunk: Buffer, encoding, callback) {
-    //     console.log(chunk.toString())
-    //     callback()
-    //   },
-    // }),
     uploadToStorageStream
   )
 
@@ -88,10 +78,6 @@ export async function exportLinks(
   })
 
   const [{ url }] = await Promise.all([uploadToStorage, convertToCSVPipeline])
-
-  // await convertToCSVPipeline
-
-  // console.log(url)
 
   return makeRight({ reportUrl: url })
 }
