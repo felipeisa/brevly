@@ -9,9 +9,11 @@ import {
   serializerCompiler,
   validatorCompiler,
 } from 'fastify-type-provider-zod'
+import { accessLinkRoute } from './routes/access-link-route'
 import { createLinkRoute } from './routes/create-link-route'
-import { exportLinksRoute } from './routes/export-links'
-import { getLinksRoute } from './routes/get-links'
+import { deleteLinkRoute } from './routes/delete-link-route'
+import { exportLinksRoute } from './routes/export-links-route'
+import { getLinksRoute } from './routes/get-links-route'
 
 const server = fastify()
 
@@ -51,6 +53,8 @@ server.register(fastifySwagger, {
 server.register(createLinkRoute)
 server.register(getLinksRoute)
 server.register(exportLinksRoute)
+server.register(accessLinkRoute)
+server.register(deleteLinkRoute)
 
 server.get('/openapi.json', () => server.swagger())
 
