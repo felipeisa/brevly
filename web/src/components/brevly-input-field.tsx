@@ -12,7 +12,7 @@ export function InputField({
   type = 'text',
 }: InputProps) {
   return (
-    <div className="flex w-full flex-col gap-2 gray-500">
+    <div className="flex w-full flex-col gap-2">
       <label
         htmlFor={id}
         className="text-[10px] leading-3.5 font-normal uppercase text-gray-500"
