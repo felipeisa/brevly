@@ -1,6 +1,10 @@
+import { CreateLinkForm } from "./components/create-link-form";
+
 export function App() {
 
   return (
-    <h1>Hello World</h1>
+    <main>
+      <CreateLinkForm />
+    </main>
   )
 }
