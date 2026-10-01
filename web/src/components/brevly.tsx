@@ -9,7 +9,6 @@ export function Brevly() {
         <div className="flex justify-center md:justify-start">
           <img src={logo} alt="Brev.ly" className="h-6" />
         </div>
-        {/* <div className="mt-8 flex flex-col items-start gap-4 md:flex-row"> */}
         <div className="mt-8 flex flex-col items-start gap-4 md:flex-row">
           <div className="w-full md:w-95 md:shrink-0">
             <CreateLinkForm />
