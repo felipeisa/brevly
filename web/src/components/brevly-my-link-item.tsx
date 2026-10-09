@@ -9,7 +9,7 @@ type MyLinkItemProps = {
 export function MyLinkItem({ link }: MyLinkItemProps) {
   return (
     <>
-      <div className="w-full border-0 border-t border-gray-200"></div>
+      <div className="w-full border-0 border-t border-gray-200" />
       <div className="flex w-full flex-row items-center py-0.5 gap-5">
         <div className="flex flex-1 flex-col items-start justify-center gap-1">
           <span className="text-sm font-semibold leading-4.5 text-blue-base">
