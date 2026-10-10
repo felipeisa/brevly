@@ -1,5 +1,4 @@
 import { Copy, Trash } from 'lucide-react'
-import { useEffect } from 'react'
 import { toast } from 'sonner'
 import type { Link } from '../store/links'
 import { useLinks } from '../store/links'
@@ -11,10 +10,6 @@ type MyLinkItemProps = {
 
 export function MyLinkItem({ link }: MyLinkItemProps) {
   const deleteLink = useLinks(state => state.deleteLink)
-
-  useEffect(() => {
-    deleteLink(link.shortUrl)
-  })
 
   async function myLinkItemDeleteLink() {
     await deleteLink(link.shortUrl)
