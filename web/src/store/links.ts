@@ -29,7 +29,16 @@ export const useLinks = create<LinkState>(set => {
 
   async function deleteLink(shortUrl: string) {
     await deleteLinkHttp(shortUrl)
-    await fetchLinks()
+    // await fetchLinks()
+
+    set(state => {
+      const links = state.links.filter(link => link.shortUrl !== shortUrl)
+
+      return {
+        links,
+        total: links.length,
+      }
+    })
   }
 
   return {

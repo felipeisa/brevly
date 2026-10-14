@@ -18,6 +18,5 @@ export async function getLinks() {
     'http://localhost:3333/link'
   )
 
-  console.log(response)
   return response.data
 }
