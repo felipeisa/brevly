@@ -13,8 +13,12 @@ export function MyLinksHeader() {
     setIsExporting(true)
     try {
       const data = await exportLinks()
-      console.log(data.reportUrl)
-      window.open(data.reportUrl, '_blank')
+      const link = document.createElement('a')
+      link.href = data.reportUrl
+      link.download = ''
+      document.body.appendChild(link)
+      link.click()
+      link.remove()
     } catch {
       toast.error('Não foi possível exportar os links')
     } finally {
