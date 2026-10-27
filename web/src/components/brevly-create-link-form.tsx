@@ -1,4 +1,6 @@
+import axios from 'axios'
 import { type FormEvent, useState } from 'react'
+import { toast } from 'sonner'
 import { useLinks } from '../store/links'
 import { InputField } from './brevly-input-field'
 
@@ -40,6 +42,15 @@ export function CreateLinkForm() {
 
       setOriginalUrl('')
       setShortUrl('')
+      setSubmitted(false)
+    } catch (error) {
+      if (axios.isAxiosError(error) && error.response?.status === 409) {
+        toast.error('Erro no cadastro', {
+          description: 'Essa URL encurtada já existe.',
+        })
+      } else {
+        toast.error('Não foi possível criar o link.')
+      }
     } finally {
       setIsSubmitting(false)
     }
