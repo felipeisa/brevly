@@ -9,6 +9,7 @@ export function App() {
       <Routes>
         <Route path="/" element={<Brevly />} />
         <Route path="/:shortUrl" element={<RedirectPage />} />
+        <Route path="/404" element={<RedirectPage />} />
       </Routes>
       <Toaster position="bottom-right" richColors />
     </BrowserRouter>
