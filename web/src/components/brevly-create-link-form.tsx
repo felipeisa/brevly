@@ -49,7 +49,9 @@ export function CreateLinkForm() {
           description: 'Essa URL encurtada já existe.',
         })
       } else {
-        toast.error('Não foi possível criar o link.')
+        toast.error('Erro no cadastro', {
+          description: 'Não foi possível criar o link.',
+        })
       }
     } finally {
       setIsSubmitting(false)
