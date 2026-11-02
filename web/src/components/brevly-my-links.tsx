@@ -21,7 +21,7 @@ export function MyLinks() {
   }, [fetchLinks])
 
   return (
-    <div className="flex w-full flex-col items-start gap-5 rounded-lg bg-gray-100 p-8">
+    <div className="flex w-full flex-col items-start gap-5 rounded-lg bg-gray-100 p-8 md:h-full md:min-h-0">
       <MyLinksHeader />
       <MyLinksList />
     </div>
