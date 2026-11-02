@@ -8,6 +8,16 @@ export function MyLinks() {
 
   useEffect(() => {
     fetchLinks()
+
+    function handleFocus() {
+      fetchLinks()
+    }
+
+    window.addEventListener('focus', handleFocus)
+
+    return () => {
+      window.removeEventListener('focus', handleFocus)
+    }
   }, [fetchLinks])
 
   return (

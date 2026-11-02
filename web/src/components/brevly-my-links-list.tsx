@@ -7,7 +7,7 @@ export function MyLinksList() {
   const isLinksListEmpty = links.length === 0
 
   return (
-    <div className="flex w-full flex-col items-start gap-4">
+    <div className="flex w-full min-h-0 max-h-[calc(100dvh-240px)] flex-col items-start gap-4 overflow-y-auto">
       {isLinksListEmpty ? (
         <>
           <div className="w-full border-0 border-t border-gray-200" />

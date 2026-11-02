@@ -93,7 +93,7 @@ export function CreateLinkForm() {
         <button
           type="submit"
           disabled={isSubmitting}
-          className="flex h-12 w-full items-center justify-center rounded-lg bg-blue-base px-5 text-sm font-semibold leading-4.5 text-white disabled:opacity-50"
+          className="flex h-12 w-full items-center justify-center rounded-lg bg-blue-base px-5 text-sm font-semibold leading-4.5 text-white disabled:opacity-50 cursor-pointer"
         >
           {isSubmitting ? 'Salvando...' : 'Salvar link'}
         </button>
