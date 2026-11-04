@@ -11,7 +11,6 @@ import { ShortUrlAlreadyExists } from './errors/short-url-already-exists'
 describe('create link', () => {
   it('deve ser possível inserir um link', async () => {
     const shortUrl = `${randomUUID()}`
-    console.log(shortUrl)
 
     const sut = await createLink({
       originalUrl: 'google.com.br',
