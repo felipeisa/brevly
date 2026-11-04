@@ -20,10 +20,10 @@ export function RedirectPage() {
       try {
         const result = await getOriginalUrl(currentShortUrl)
         setOriginalUrl(result.originalUrl)
-        // window.location.replace(result.originalUrl)
+        window.location.replace(result.originalUrl)
       } catch (error) {
         if (axios.isAxiosError(error) && error.response?.status === 404) {
-          navigate('/404', { replace: true })
+          navigate('/url/not-found', { replace: true })
         } else {
           console.error('Erro ao redirecionar:', error)
         }

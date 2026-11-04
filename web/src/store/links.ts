@@ -17,9 +17,9 @@ type LinkState = {
   total: number
   fetchLinks: () => Promise<void>
   deleteLink: (shortUrl: string) => Promise<void>
-  // createLink: (data: CreateLinkInput) => Promise<{ id: string }>
   createLink: (data: CreateLinkInput) => Promise<void>
   isFetchingLinks: boolean
+  hasFetchingLinks: boolean
 }
 
 export const useLinks = create<LinkState>(set => {
@@ -32,6 +32,7 @@ export const useLinks = create<LinkState>(set => {
       set({
         links: data.links,
         total: data.total,
+        hasFetchingLinks: true,
       })
     } finally {
       set({ isFetchingLinks: false })
@@ -40,7 +41,6 @@ export const useLinks = create<LinkState>(set => {
 
   async function deleteLink(shortUrl: string) {
     await deleteLinkHttp(shortUrl)
-    // await fetchLinks()
 
     set(state => {
       const links = state.links.filter(link => link.shortUrl !== shortUrl)
@@ -54,7 +54,6 @@ export const useLinks = create<LinkState>(set => {
 
   async function createLink(data: CreateLinkInput) {
     await createLinkHttp(data)
-    // await fetchLinks()
   }
 
   return {
@@ -64,5 +63,6 @@ export const useLinks = create<LinkState>(set => {
     deleteLink,
     createLink,
     isFetchingLinks: false,
+    hasFetchingLinks: false,
   }
 })

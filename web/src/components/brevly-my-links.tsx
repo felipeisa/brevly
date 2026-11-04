@@ -22,7 +22,7 @@ export function MyLinks() {
   }, [fetchLinks])
 
   return (
-    <div className="relative flex h-full min-h-0 w-full flex-col items-start gap-5 overflow-hidden rounded-lg bg-gray-100 p-8">
+    <div className="relative flex max-h-full min-h-0 w-full flex-col items-start gap-5 overflow-hidden rounded-lg bg-gray-100 p-8">
       {isFetchingLinks && (
         <div className="absolute inset-x-0 top-0 z-10 h-0.5 overflow-hidden">
           <div className="loading-bar bg-blue-base" />

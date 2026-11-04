@@ -9,7 +9,7 @@ export function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Brevly />} />
-        <Route path="/404" element={<NotFound />} />
+        <Route path="/url/not-found" element={<NotFound />} />
         <Route path="/:shortUrl" element={<RedirectPage />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
