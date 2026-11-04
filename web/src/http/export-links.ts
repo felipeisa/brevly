@@ -1,13 +1,11 @@
-import axios from 'axios'
+import { api } from './api'
 
 interface ExportLinksResponse {
   reportUrl: string
 }
 
 export async function exportLinks() {
-  const response = await axios.post<ExportLinksResponse>(
-    'http://localhost:3333/link/exports'
-  )
+  const response = await api.post<ExportLinksResponse>('/link/exports')
 
   return response.data
 }

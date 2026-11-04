@@ -1,7 +1,5 @@
-import axios from 'axios'
+import { api } from './api'
 
 export async function deleteLink(shortUrl: string) {
-  await axios.delete(
-    `http://localhost:3333/link/${encodeURIComponent(shortUrl)}`
-  )
+  await api.delete(`/link/${encodeURIComponent(shortUrl)}`)
 }

@@ -1,4 +1,4 @@
-import axios from 'axios'
+import { api } from './api'
 
 export interface CreateLinkInput {
   originalUrl: string
@@ -10,15 +10,11 @@ interface CreateLinkResponse {
 }
 
 export async function createLink(data: CreateLinkInput) {
-  const response = await axios.post<CreateLinkResponse>(
-    'http://localhost:3333/link',
-    data,
-    {
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    }
-  )
+  const response = await api.post<CreateLinkResponse>('/link', data, {
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  })
 
   return response.data
 }

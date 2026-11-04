@@ -129,6 +129,46 @@ A documentação interativa pode ser acessada em:
 http://localhost:3333/docs
 ```
 
+### Executando a API com Docker
+
+O projeto possui um Dockerfile multi-stage para gerar uma imagem de produção do back-end.
+
+Na pasta `server`, construa a imagem:
+
+```bash
+docker build -t brevly-server:local .
+```
+
+Com o PostgreSQL iniciado, execute o contêiner informando as variáveis de ambiente:
+
+```bash
+docker run --rm \
+  --name brevly-api \
+  -p 3333:3333 \
+  --add-host=host.docker.internal:host-gateway \
+  -e PORT=3333 \
+  -e NODE_ENV=production \
+  -e DATABASE_URL="postgresql://docker:docker@host.docker.internal:5432/brevly" \
+  -e CLOUDFLARE_ACCOUNT_ID="SEU_ACCOUNT_ID" \
+  -e CLOUDFLARE_ACCESS_KEY_ID="SEU_ACCESS_KEY_ID" \
+  -e CLOUDFLARE_SECRET_ACCESS_KEY="SUA_SECRET_ACCESS_KEY" \
+  -e CLOUDFLARE_BUCKET="SEU_BUCKET" \
+  -e CLOUDFLARE_PUBLIC_URL="https://SEU-ENDERECO.r2.dev" \
+  brevly-server:local
+```
+
+Substitua os valores de exemplo pelas configurações reais do ambiente.
+
+A URL de conexão com o PostgreSQL apresentada corresponde à configuração local utilizada no projeto. Caso as credenciais ou o endereço do banco sejam diferentes, ajuste a variável `DATABASE_URL`.
+
+A API ficará disponível em:
+
+```text
+http://localhost:3333
+```
+
+**Observação:** as credenciais não devem ser versionadas no repositório. Informar segredos diretamente no terminal também pode registrá-los no histórico de comandos; em ambientes reais, utilize um mecanismo seguro de gerenciamento de variáveis e segredos.
+
 ## Configuração do front-end
 
 Em outro terminal, acesse a pasta:
@@ -170,9 +210,14 @@ http://localhost:5173
 
 ## Testes automatizados
 
-Os testes do back-end utilizam Vitest e um ambiente de banco de dados separado.
+Os testes do back-end utilizam Vitest e um banco PostgreSQL separado do ambiente de desenvolvimento, evitando alterações nos dados utilizados pela aplicação.
 
-Na pasta `server`, configure o arquivo `.env.test` para utilizar um banco de testes e execute:
+- Banco de desenvolvimento: `brevly`.
+- Banco de testes: `brevly_test`.
+
+Na pasta `server`, configure o arquivo `.env.test` com a variável `DATABASE_URL` apontando para o banco de testes.
+
+Para executar os testes:
 
 ```bash
 pnpm run test

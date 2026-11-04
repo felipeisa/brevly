@@ -1,4 +1,4 @@
-import axios from 'axios'
+import { api } from './api'
 
 interface Link {
   id: string
@@ -14,9 +14,7 @@ interface GetLinksResponse {
 }
 
 export async function getLinks() {
-  const response = await axios.get<GetLinksResponse>(
-    'http://localhost:3333/link'
-  )
+  const response = await api.get<GetLinksResponse>('/link')
 
   return response.data
 }
