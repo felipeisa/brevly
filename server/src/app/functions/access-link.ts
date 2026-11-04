@@ -28,12 +28,6 @@ export async function accessLink(
     .where(eq(schema.links.shortUrl, shortUrl))
     .returning({ originalUrl: schema.links.originalUrl })
 
-  console.log('Link acessado:', {
-    shortUrl,
-    originalUrl: link?.originalUrl,
-    timestamp: new Date().toISOString(),
-  })
-
   if (!link) {
     return makeLeft(new LinkNotFound())
   }

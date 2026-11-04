@@ -28,8 +28,6 @@ export function MyLinkItem({ link }: MyLinkItemProps) {
   async function myLinkItemCopyLink() {
     const url = `http://localhost:5173/${link.shortUrl}`
 
-    console.log('URL copiada:', url)
-
     try {
       await navigator.clipboard.writeText(url)
 

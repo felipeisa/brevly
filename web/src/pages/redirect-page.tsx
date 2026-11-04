@@ -4,25 +4,48 @@ import { useNavigate, useParams } from 'react-router'
 import logo_icon from '../assets/logo_icon.svg'
 import { getOriginalUrl } from '../http/get-original-url'
 
+interface PrerenderDocument extends Document {
+  readonly prerendering?: boolean
+}
+
 export function RedirectPage() {
   const { shortUrl } = useParams<{ shortUrl: string }>()
   console.log('shortUrl recebido:', shortUrl)
-  const requestedShortUrl = useRef<string | null>(null)
+  const requestedLink = useRef<{
+    shortUrl: string
+    promise: ReturnType<typeof getOriginalUrl>
+  } | null>(null)
   const navigate = useNavigate()
   const [originalUrl, setOriginalUrl] = useState<string | null>(null)
 
   useEffect(() => {
-    if (!shortUrl || requestedShortUrl.current === shortUrl) return
+    if (!shortUrl) return
 
-    requestedShortUrl.current = shortUrl
-    const currentShortUrl = shortUrl
+    const prerenderDocument = document as PrerenderDocument
+    let active = true
 
     async function redirect() {
+      if (!shortUrl) return
+
+      if (prerenderDocument.prerendering) return
+
+      if (requestedLink.current?.shortUrl !== shortUrl) {
+        requestedLink.current = {
+          shortUrl,
+          promise: getOriginalUrl(shortUrl),
+        }
+      }
+
       try {
-        const result = await getOriginalUrl(currentShortUrl)
+        const result = await requestedLink.current.promise
+
+        if (!active) return
+
         setOriginalUrl(result.originalUrl)
         window.location.replace(result.originalUrl)
       } catch (error) {
+        if (!active) return
+
         if (axios.isAxiosError(error) && error.response?.status === 404) {
           navigate('/url/not-found', { replace: true })
         } else {
@@ -30,7 +53,24 @@ export function RedirectPage() {
         }
       }
     }
-    redirect()
+
+    function handlePrerenderingChange() {
+      void redirect()
+    }
+
+    if (prerenderDocument.prerendering) {
+      document.addEventListener('prerenderingchange', handlePrerenderingChange)
+    } else {
+      void redirect()
+    }
+
+    return () => {
+      active = false
+      document.removeEventListener(
+        'prerenderingchange',
+        handlePrerenderingChange
+      )
+    }
   }, [shortUrl, navigate])
 
   return (
