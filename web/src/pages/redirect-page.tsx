@@ -10,7 +10,6 @@ interface PrerenderDocument extends Document {
 
 export function RedirectPage() {
   const { shortUrl } = useParams<{ shortUrl: string }>()
-  console.log('shortUrl recebido:', shortUrl)
   const requestedLink = useRef<{
     shortUrl: string
     promise: ReturnType<typeof getOriginalUrl>

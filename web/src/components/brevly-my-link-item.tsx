@@ -1,4 +1,4 @@
-import { Copy, Trash } from 'lucide-react'
+import { CopyIcon, TrashIcon } from '@phosphor-icons/react'
 import { toast } from 'sonner'
 import type { Link } from '../store/links'
 import { useLinks } from '../store/links'
@@ -44,9 +44,6 @@ export function MyLinkItem({ link }: MyLinkItemProps) {
       <div className="w-full border-0 border-t border-gray-200" />
       <div className="flex w-full flex-row items-center py-0.5 gap-5">
         <div className="flex flex-1 flex-col items-start justify-center gap-1">
-          {/* <span className="text-sm font-semibold leading-4.5 text-blue-base">
-            brev.ly/{link.shortUrl}
-          </span> */}
           <a
             href={`/${encodeURIComponent(link.shortUrl)}`}
             target="_blank"
@@ -68,14 +65,14 @@ export function MyLinkItem({ link }: MyLinkItemProps) {
             aria-label="Copiar link"
             onClick={myLinkItemCopyLink}
           >
-            <Copy className="size-4 text-gray-600" />
+            <CopyIcon className="size-4 text-gray-600" />
           </IconButton>
           <IconButton
             type="button"
             aria-label="Excluir link"
             onClick={myLinkItemDeleteLink}
           >
-            <Trash className="size-4 text-gray-600" />
+            <TrashIcon className="size-4 text-gray-600" />
           </IconButton>
         </div>
       </div>
