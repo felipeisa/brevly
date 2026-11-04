@@ -15,7 +15,7 @@
     "pretest": "pnpm run db:migrate:test",
     "pretest:watch": "pnpm run db:migrate:test",
     "build": "tsup-node",
-    "start": "node dist/infra/http/server.js"
+    "start": "node --env-file .env dist/infra/http/server.js"
   },
   "keywords": [],
   "author": "",
