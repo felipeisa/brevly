@@ -34,3 +34,29 @@
   width: 0;
   height: 0;
 }
+
+@keyframes loading-progress {
+  from {
+    left: -33.333%;
+  }
+
+  to {
+    left: 100%;
+  }
+}
+
+.loading-bar {
+  position: absolute;
+  top: 0;
+  left: -33.333%;
+  width: 33.333%;
+  height: 100%;
+  animation: loading-progress 0.8s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .loading-bar {
+    animation: none;
+    left: 0;
+  }
+}

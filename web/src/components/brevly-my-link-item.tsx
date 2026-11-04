@@ -12,7 +12,17 @@ export function MyLinkItem({ link }: MyLinkItemProps) {
   const deleteLink = useLinks(state => state.deleteLink)
 
   async function myLinkItemDeleteLink() {
-    await deleteLink(link.shortUrl)
+    const confirmed = window.confirm(
+      `Você realmente quer apagar o link ${link.shortUrl}?`
+    )
+    if (!confirmed) {
+      return
+    }
+    try {
+      await deleteLink(link.shortUrl)
+    } catch {
+      toast.error('Não foi possível excluir o link.')
+    }
   }
 
   async function myLinkItemCopyLink() {

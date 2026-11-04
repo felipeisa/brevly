@@ -7,7 +7,7 @@ export function MyLinksList() {
   const isLinksListEmpty = links.length === 0
 
   return (
-    <div className="scrollbar-brevly flex w-full min-h-0 flex-col items-start gap-4 overflow-y-auto md:flex-1">
+    <div className="scrollbar-brevly flex w-full min-h-0 flex-col items-start gap-4 overflow-y-auto flex-1">
       {isLinksListEmpty ? (
         <>
           <div className="w-full border-0 border-t border-gray-200" />

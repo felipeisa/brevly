@@ -11,6 +11,7 @@ export function CreateLinkForm() {
   const [submitted, setSubmitted] = useState(false)
 
   const createLink = useLinks(state => state.createLink)
+  const fetchLinks = useLinks(state => state.fetchLinks)
   const isValidShortUrl = /^[a-z0-9-]+$/.test(shortUrl)
 
   function isValidUrl(value: string) {
@@ -43,6 +44,10 @@ export function CreateLinkForm() {
       setOriginalUrl('')
       setShortUrl('')
       setSubmitted(false)
+
+      void fetchLinks().catch(() => {
+        toast.error('Não foi possível atualizar a lista de links.')
+      })
     } catch (error) {
       if (axios.isAxiosError(error) && error.response?.status === 409) {
         toast.error('Erro no cadastro', {

@@ -5,6 +5,7 @@ import { MyLinksList } from './brevly-my-links-list'
 
 export function MyLinks() {
   const fetchLinks = useLinks(state => state.fetchLinks)
+  const isFetchingLinks = useLinks(state => state.isFetchingLinks)
 
   useEffect(() => {
     fetchLinks()
@@ -21,7 +22,12 @@ export function MyLinks() {
   }, [fetchLinks])
 
   return (
-    <div className="flex w-full flex-col items-start gap-5 rounded-lg bg-gray-100 p-8 md:h-full md:min-h-0">
+    <div className="relative flex h-full min-h-0 w-full flex-col items-start gap-5 overflow-hidden rounded-lg bg-gray-100 p-8">
+      {isFetchingLinks && (
+        <div className="absolute inset-x-0 top-0 z-10 h-0.5 overflow-hidden">
+          <div className="loading-bar bg-blue-base" />
+        </div>
+      )}
       <MyLinksHeader />
       <MyLinksList />
     </div>
