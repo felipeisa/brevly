@@ -6,6 +6,7 @@ import { getOriginalUrl } from '../http/get-original-url'
 
 export function RedirectPage() {
   const { shortUrl } = useParams<{ shortUrl: string }>()
+  console.log('shortUrl recebido:', shortUrl)
   const requestedShortUrl = useRef<string | null>(null)
   const navigate = useNavigate()
   const [originalUrl, setOriginalUrl] = useState<string | null>(null)

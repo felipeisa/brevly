@@ -17,12 +17,35 @@ export const accessLinkRoute: FastifyPluginAsyncZod = async server => {
           200: z.object({
             originalUrl: z.string(),
           }),
+          204: z.void(),
           404: z.object({ message: z.string() }),
         },
       },
     },
     async (request, reply) => {
       const { shortUrl } = request.params
+
+      const secPurpose = request.headers['sec-purpose']
+      const purpose = request.headers.purpose
+
+      const isPrefetch =
+        secPurpose?.includes('prefetch') ||
+        secPurpose?.includes('prerender') ||
+        purpose === 'prefetch'
+
+      if (isPrefetch) {
+        return reply.status(204).send()
+      }
+
+      console.log({
+        date: new Date().toISOString(),
+        method: request.method,
+        url: request.url,
+        userAgent: request.headers['user-agent'],
+        purpose: request.headers['purpose'],
+        secPurpose: request.headers['sec-purpose'],
+        referer: request.headers.referer,
+      })
 
       const result = await accessLink({
         shortUrl: shortUrl,
